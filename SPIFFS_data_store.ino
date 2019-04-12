@@ -14,8 +14,7 @@ mystr+="]";
   if (motion == 1) { motion = 0;}
   if (spiffsActive) {
     if (SPIFFS.exists(TESTFILE)) {
-      for(int i=0;i<=400;i++){           //loop to check data sending
-      f = SPIFFS.open(TESTFILE, "a");}
+      f = SPIFFS.open(TESTFILE, "a");
       if (!f) {
         Serial.println("Unable To Open file");
       }
