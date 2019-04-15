@@ -15,33 +15,26 @@ Serial.println(diff_speed);
 if(diff_speed>0){ Up(diff_speed);}
 else if(diff_speed<0){Down(0-diff_speed);}
 }
-
 void Up(int level)
 {
   //OUTPUT loop for INC Button
   Serial.print("\n Speed Up by : ");
   Serial.println(level);
   for (int j = 0; j < level;) {
-    pinMode(IncbuttonPin , OUTPUT);
-    digitalWrite(IncbuttonPin , LOW);
-    delay(200);
-    digitalWrite(IncbuttonPin , HIGH);
-    j++; //Serial.print("\t Up "); Serial.print(j);
-    delay(200);
+  for (int i = 0; i < 3; i++) {
+   sendNEC(0xFBE817, 32);   delay(40);
   }
-  pinMode(IncbuttonPin , INPUT_PULLUP);
+  delay(100); //0.1 second delay between each signal burst
+  j++;}//datasend();
 }
 void Down(int level)
 { //OUTPUT loop for DEC Button
   Serial.print("\n Speed Down by: ");
   Serial.println(level);
-  for (int i = 0; i < level;) {
-    pinMode(DecbuttonPin, OUTPUT); delay(10);
-    digitalWrite(DecbuttonPin, 0);
-    delay(200);
-    digitalWrite(DecbuttonPin, 1);
-    i++; //Serial.print("\t Down: "); Serial.print(i);
-    delay(200);
+  for (int j = 0; j < level;) {
+  for (int i = 0; i < 3; i++) {
+   sendNEC(0xFB38C7, 32);   delay(40);
   }
-  pinMode(DecbuttonPin, INPUT_PULLUP);
+  delay(100); //0.1 second delay between each signal burst
+  j++;} 
 }

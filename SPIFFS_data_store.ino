@@ -1,18 +1,16 @@
-//Storing pointers in Permanent memory is remaining
-
 void store_data(float temperature,float humidity) {
-   RtcDateTime now = Rtc.GetDateTime();
- 
+RtcDateTime now = Rtc.GetDateTime();
 String mystr="";
+mystr+="[";
 if (!Rtc.IsDateTimeValid()) mystr+="0";
 else mystr+=String(now.TotalSeconds()-TIME_SUBTRACTED); //getDateTime(now);//String(currenttime);
-//mystr+="123456";
 mystr+=",";
 mystr+=String(temperature);
 mystr+=",";
 mystr+=String(humidity);
 mystr+=",";
 mystr+=String((motion<<7)|myspeed);
+mystr+="]";
   if (motion == 1) { motion = 0;}
   if (spiffsActive) {
     if (SPIFFS.exists(TESTFILE)) {
@@ -21,15 +19,36 @@ mystr+=String((motion<<7)|myspeed);
         Serial.println("Unable To Open file");
       }
       else {
+       
+if((filesize<=SEND_BYTE+500)&&(file_number<=3)){
         Serial.print("Appending line to file:");
+        mystr=","+mystr;
         Serial.println(mystr);
+//     for(int bohot=0;bohot<1000;bohot++){
         f.println(mystr);
+        }
+        else{ Serial.print("Memory is full. Can not append line: ");
+        Serial.println(mystr);
+        }
+//        }
+if(f.size()!=filesize){
       filesize=f.size();
-      
+}
+else if(filesize<=SEND_BYTE){
+SPIFFS.remove(FILE1);                        //Remove the text file... #TEMPORARY
+SPIFFS.remove(FILE2);                        //Remove the text file... #TEMPORARY
+SPIFFS.remove(FILE3);                        //Remove the text file... #TEMPORARY
+
+  }
       f.close();
       Serial.print("File size= ");
       Serial.println(filesize);
       Serial.println();
+//      }
+//      else{
+//        Serial.println("Could not append following line to file... File is oversize");
+//        Serial.println(mystr);
+//      }
       }
     }
     else {
@@ -44,8 +63,11 @@ mystr+=String((motion<<7)|myspeed);
         Serial.print("File creation successful");
         Serial.println(TESTFILE);
         sendposition=f.position();
+   
         f.println(mystr);
-        filesize=f.size();
+       Serial.print("Appending 1st line:");
+       Serial.println(mystr);
+       filesize=f.size();
          f.close();
           EEPROM.put(0,sendposition);
           EEPROM.commit();
@@ -54,21 +76,11 @@ mystr+=String((motion<<7)|myspeed);
   }
 }
 
-//String getDateTime(const RtcDateTime& dt)
-//{
-// 
-//    char datestring[20];
-//
-//    snprintf_P(datestring, 
-//            countof(datestring),
-//            PSTR("%02u/%02u/%04u %02u:%02u:%02u"),
-//            dt.Month(),
-//            dt.Day(),
-//            dt.Year(),
-//            dt.Hour(),
-//            dt.Minute(),
-//            dt.Second() );
-//    Serial.print(datestring);
-//    
-//}
-//
+void resetdht(){
+  pinMode(DHTPIN, OUTPUT); // switches power to DHT on
+     digitalWrite(DHTPIN, LOW); // sets output to gnd
+  delay(1000); // delay necessary after power up for DHT to stabilize
+  pinMode(DHTPIN, INPUT_PULLUP); // switches power to DHT on
+  dht.setup(DHTPIN, DHTesp::DHTTYPE); // Connect DHT sensor to GPIO 17
+delay(2000);
+}
