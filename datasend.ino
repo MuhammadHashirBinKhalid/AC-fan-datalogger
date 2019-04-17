@@ -16,11 +16,11 @@ unsigned long after_send=0;
     return 0;
   }
 
-  if (client.verify(fingerprint, "customscrypts.com")) {
-    Serial.println("certificate matches");
-  } else {
-    Serial.println("certificate doesn't match");
-  }
+  //if (client.verify(fingerprint, "customscrypts.com")) {
+  // Serial.println("certificate matches");
+  //} else {
+  // Serial.println("certificate doesn't match");
+  //}
 
   String url2 = "/instrux/crud/bulk.php";
   Serial.print("requesting URL: ");
@@ -45,7 +45,7 @@ unsigned long after_send=0;
           "Content-Length: "+sendfilesize+ "\r\n");
         //  +         "\r\n" + JSONstringBuffer + "\r\n");
         client.println();
-client.print("{\"return\":0,\"mac\":\"CC:50:E3:0A:0D:73\",\"password\":123456,\"localId\":1,\"params\":[\"timestamp\",\"temperature\",\"humidity\",\"ms\"],\"values\":[");
+client.print("{\"return\":0,\"mac\":\"84:F3:EB:9F:3E:20\",\"password\":123456,\"localId\":1,\"params\":[\"timestamp\",\"temperature\",\"humidity\",\"ms\"],\"values\":[");
 
  client.write(f);
  client.print("]}");
