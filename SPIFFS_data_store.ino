@@ -24,8 +24,9 @@ if((filesize<=SEND_BYTE+500)&&(file_number<=3)){
         Serial.print("Appending line to file:");
         mystr=","+mystr;
         Serial.println(mystr);
-//     for(int bohot=0;bohot<1000;bohot++){
+//     for(int bohot=0;bohot<400;bohot++){        //Only for testing purpose
         f.println(mystr);
+//}
         }
         else{ Serial.print("Memory is full. Can not append line: ");
         Serial.println(mystr);

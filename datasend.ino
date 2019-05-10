@@ -45,7 +45,8 @@ unsigned long after_send=0;
           "Content-Length: "+sendfilesize+ "\r\n");
         //  +         "\r\n" + JSONstringBuffer + "\r\n");
         client.println();
-client.print("{\"return\":0,\"mac\":\"84:F3:EB:9F:3E:20\",\"password\":123456,\"localId\":1,\"params\":[\"timestamp\",\"temperature\",\"humidity\",\"ms\"],\"values\":[");
+client.print(header_string);
+//client.print("{\"return\":0,\"mac\":\"84:F3:EB:9F:3E:20\",\"password\":123456,\"localId\":1,\"params\":[\"timestamp\",\"temperature\",\"humidity\",\"ms\"],\"values\":[");
 
  client.write(f);
  client.print("]}");

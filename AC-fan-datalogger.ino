@@ -59,11 +59,11 @@
 #define AUTO_ENABLED 1
 #define sending_interval 10      //Seconds
 //declaration
-bool datasend();
+bool datasend(String);
 void sendNEC(unsigned long data, int nbits);
 // Lib instantiate
 void store_data(float temperature, float humidity);
-void addtoJSON();
+//void addtoJSON();
 void resetdht();
 String get_File(int thisfilenumber);
 // Lib instantiate
@@ -113,6 +113,7 @@ int myspeed;
 int file_number = 1;
 int send_file = 1;
 String TESTFILE = "/testfile3.txt";
+String header_string="";
 
 
 //gets called when WiFiManager enters configuration mode
@@ -160,12 +161,12 @@ void setup() {
   Serial.println();
   Serial.print("Compiled at=");
   Serial.println(compiled.TotalSeconds());
-  //SPIFFS.remove(TESTFILE);                        //Remove the text file... #TEMPORARY
+ // SPIFFS.remove(TESTFILE);                        //Remove the text file... #TEMPORARY
  // SPIFFS.remove(FILE1);                        //Remove the text file... #TEMPORARY
-  //SPIFFS.remove(FILE2);                        //Remove the text file... #TEMPORARY
-  //SPIFFS.remove(FILE3);                        //Remove the text file... #TEMPORARY
-  //SPIFFS.remove(OLDTESTFILE);                        //Remove the text file... #TEMPORARY
-  //SPIFFS.remove(TESTFILE);                        //Remove the text file... #TEMPORARY
+ //SPIFFS.remove(FILE2);                        //Remove the text file... #TEMPORARY
+ // SPIFFS.remove(FILE3);                        //Remove the text file... #TEMPORARY
+//  SPIFFS.remove(OLDTESTFILE);                        //Remove the text file... #TEMPORARY
+ // SPIFFS.remove(TESTFILE);                        //Remove the text file... #TEMPORARY
 
   irrecv.enableIRIn();  // Start the receiver
   pinMode(OutputPin, OUTPUT);
@@ -239,8 +240,13 @@ void setup() {
   Rtc.Enable32kHzPin(false);
   Rtc.SetSquareWavePin(DS3231SquareWavePin_ModeNone);
   //     sendIRdata(myspeed);
-  //Serial.print("Mac address= ");
-//  Serial.println(WiFi.macAddress());
+  Serial.print("Mac address= ");
+  Serial.println(WiFi.macAddress());
+header_string="{\"return\":0,\"mac\":\"";
+header_string+=String(WiFi.macAddress());
+//header_string+="5C:CF:7F:ED:D0:A7";                              
+header_string+="\",\"password\":123456,\"localId\":1,\"params\":[\"timestamp\",\"temperature\",\"humidity\",\"ms\"],\"values\":[";
+
 }
 
 bool motion = 0;
