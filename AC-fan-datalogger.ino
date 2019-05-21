@@ -52,12 +52,12 @@
 #define FILE2 "/testfile4.txt"
 #define FILE3 "/testfile5.txt"
 //#define OLDTESTFILE "/testfile.txt"
-#define SEND_BYTE 500000  //200 is good             //3 params & 24 readings = 1500 bytes
+#define SEND_BYTE 20000  //200 is good             //3 params & 24 readings = 1500 bytes
 //#define MAX_FILE_SIZE 3000    //000     //Add three zeros to make it 1,000,000=1MB
 #define JSONbuffersizeval 1000
 #define Testing 0                 // #TEMPORARY=1.. Otherwise it will be 0
 #define AUTO_ENABLED 1
-#define sending_interval 10      //Seconds
+#define sending_interval 30      //Seconds
 //declaration
 bool datasend(String);
 void sendNEC(unsigned long data, int nbits);

@@ -19,7 +19,6 @@ mystr+="]";
         Serial.println("Unable To Open file");
       }
       else {
-       
 if((filesize<=SEND_BYTE+500)&&(file_number<=3)){
         Serial.print("Appending line to file:");
         mystr=","+mystr;
